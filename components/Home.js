@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Header from "./Header";
 import Joueur_1 from "./Joueur_1";
 import Joueur_2 from "./Joueur_2";
+import Student_1 from "./Student_1";
+import Student_2 from "./Student_2";
 import Score from "./Score";
 
 function Home() {
@@ -12,8 +14,10 @@ function Home() {
   const [selectedSpellJ2, setSelectedSpellJ2] = useState(0); // et permet le calcul du score
   const [score_1, setScore_1] = useState(0); // après clique mise a jour ou pas du compteur
   const [score_2, setScore_2] = useState(0);
-  console.log(selectedSpellJ1);
-  console.log(selectedSpellJ2);
+  const [student_1, setStudent_1] = useState([]); //stock le sort fetchéééo du J1
+  const [student_2, setStudent_2] = useState([]);
+
+  console.log(student_1);
 
   //Joueur 1 fetch sort aléatoire
   useEffect(() => {
@@ -22,6 +26,26 @@ function Home() {
       .then((data) => {
         const spell1 = [data];
         setSpellsJ1(spell1);
+      });
+  }, []);
+
+  //JOueur 1 fecth character
+  useEffect(() => {
+    fetch("http://localhost:3000/characters/")
+      .then((response) => response.json())
+      .then((data) => {
+        const character = [data];
+        setStudent_1(character);
+      });
+  }, []);
+
+  //JOueur 2 fecth character
+  useEffect(() => {
+    fetch("http://localhost:3000/characters/")
+      .then((response) => response.json())
+      .then((data) => {
+        const character = [data];
+        setStudent_2(character);
       });
   }, []);
 
@@ -89,6 +113,16 @@ function Home() {
         <div className={styles.content}>
           <h1 className={styles.title}>L'heure du dudududu duueeeeeel</h1>
           <div className={styles.middle}>
+            <div className={styles.joueur_1}>
+          {student_1.map((data, i) => (
+              <Student_1
+                onSpellClick={spellClickJ1}
+                key={i}
+                studentName={data.name}
+                house={data.house}
+                image={data.image}
+              />
+            ))}
             {spellsJ1.map((data, i) => (
               <Joueur_1
                 onSpellClick={spellClickJ1}
@@ -98,7 +132,19 @@ function Home() {
                 spellpoint1={data.spellpoint}
               />
             ))}
+            </div>
+            
             <Score score_1={score_1} score_2={score_2} />
+            <div className={styles.joueur_1}>
+            {student_2.map((data, i) => (
+              <Student_2
+                onSpellClick={spellClickJ1}
+                key={i}
+                studentName={data.name}
+                house={data.house}
+                image={data.image}
+              />
+            ))}
             {spellsJ2.map((data, i) => (
               <Joueur_2
                 onSpellClick={spellClickJ2}
@@ -108,6 +154,7 @@ function Home() {
                 spellpoint2={data.spellpoint}
               />
             ))}
+            </div>
           </div>
         </div>
       </main>
