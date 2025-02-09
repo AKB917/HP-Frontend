@@ -9,13 +9,13 @@ function Joueur_2(props) {
 
   return (
     <div>
-      <div className={styles.joureur}>
+      <div className={styles.joueur}>
         <p> name of spell :{props.name}</p>
         <p> description of spell :{props.description}</p>
         <p> power of spell :{props.spellpoint2}</p>
         <Image src="/sorcier1.png" alt="avatar" height={100} width={100} />
         <span className={styles.sort}></span>
-        <button onClick={handleClick}>Nouveau sorts</button>
+        <button className={styles.Button} onClick={handleClick}>Nouveau sorts</button>
       </div>
     </div>
   );

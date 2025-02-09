@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  width: 100vw;
   padding: 4rem 0;
 }
 
@@ -19,5 +20,11 @@
 
 .title a:hover, .title a:focus, .title a:active {
   text-decoration: underline;
+}
+
+.middle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
