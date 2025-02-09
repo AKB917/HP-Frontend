@@ -6,30 +6,43 @@ import Joueur_2 from "./Joueur_2";
 import Score from "./Score";
 
 function Home() {
+  const [spellsJ1, setSpellsJ1] = useState([]);
+  const [spellsJ2, setSpellsJ2] = useState([]);
+  const [selectedSpellJ1, setSelectedSpellJ1] = useState(0);
+  const [selectedSpellJ2, setSelectedSpellJ2] = useState(0);
 
-  const [spellsJ1, setSpellsJ1] = useState({});
-  const [spellsJ2, setSpellsJ2] = useState({});
- 
+  //Joueur 1 fetch sort aléatoire
   useEffect(() => {
     fetch("http://localhost:3000/spells/")
       .then((response) => response.json())
-      .then((data) =>  {
-        setSpellsJ1(data),
-        setSpellsJ2(data)
+      .then((data) => {
+        console.log(data);
+        const spell1 = [data];
+        setSpellsJ1(spell1);
+      });
+  }, []);
+
+  //Joueur 2 fetch sort aléatoire
+  useEffect(() => {
+    fetch("http://localhost:3000/spells/")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        const spell2 = [data];
+        setSpellsJ2(spell2);
       });
   }, []);
 
 
- /*  let spellJ1 = [];
-  let spellJ2 = []; */
+  const spellClickJ1 = (spell) => {
+    console.log("spell select 1", spell);
+    setSelectedSpellJ1(spell)
+  };
 
-  spellsJ1.map((data, i) => {
-    return <Joueur_1 key={i} name={data.name} description={data.description} spellpoint1={data.spellpoint}/>;
-  });
-
-  spellsJ2.map((data, i) => {
-    return <Joueur_2 key={i} name={data.name} description={data.description} spellpoint2={data.spellpoint}/>;
-  });
+  const spellClickJ2 = (spell) => {
+    console.log("spell select 2", spell);
+    setSelectedSpellJ2(spell)
+  };
 
   return (
     <div>
@@ -37,9 +50,28 @@ function Home() {
         <Header />
         <div className={styles.middle}>
           <h1 className={styles.title}>L'heure du dudududu duueeeeeel</h1>
-          <Joueur_1/>
-          <Score/>
-          <Joueur_2/>
+          {spellsJ1.map((data, i) => (
+            <Joueur_1
+              onSpellClick={spellClickJ1}
+              key={i}
+              name={data.name}
+              description={data.description}
+              spellpoint1={data.spellpoint}
+            />
+          ))}
+          <Score
+            spellpoint1={selectedSpellJ1}
+            spellpoint2={selectedSpellJ2}
+          />
+          {spellsJ2.map((data, i) => (
+            <Joueur_2
+              onSpellClick={spellClickJ2}
+              key={i}
+              name={data.name}
+              description={data.description}
+              spellpoint2={data.spellpoint}
+            />
+          ))}
         </div>
       </main>
     </div>
