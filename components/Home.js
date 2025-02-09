@@ -3,25 +3,32 @@ import { useState, useEffect } from "react";
 import Header from "./Header";
 import Joueur_1 from "./Joueur_1";
 import Joueur_2 from "./Joueur_2";
-import Score from "./score";
+import Score from "./Score";
 
 function Home() {
-  const [spell, setSpell] = useState([]);
-  const [score_1, setScore_1] = useState(0);
-  const [score_2, setScore_2] = useState(0);
 
+  const [spellsJ1, setSpellsJ1] = useState({});
+  const [spellsJ2, setSpellsJ2] = useState({});
+ 
   useEffect(() => {
-    fetch("https://hp-api.onrender.com/api/spells/") // a remplacer par la route get backend
+    fetch("http://localhost:3000/spells/")
       .then((response) => response.json())
-      .then((data) => setSpell(data));
+      .then((data) =>  {
+        setSpellsJ1(data),
+        setSpellsJ2(data)
+      });
   }, []);
 
-  const spells_joueur_1 = spell.map((data, i) => {
-    return <Joueur_1 key={i} name={data.name} description={data.description} />;
+
+ /*  let spellJ1 = [];
+  let spellJ2 = []; */
+
+  spellsJ1.map((data, i) => {
+    return <Joueur_1 key={i} name={data.name} description={data.description} spellpoint1={data.spellpoint}/>;
   });
 
-  const spells_joueur_2 = spell.map((data, i) => {
-    return <Joueur_2 key={i} name={data.name} description={data.description} />;
+  spellsJ2.map((data, i) => {
+    return <Joueur_2 key={i} name={data.name} description={data.description} spellpoint2={data.spellpoint}/>;
   });
 
   return (
@@ -30,9 +37,9 @@ function Home() {
         <Header />
         <div className={styles.middle}>
           <h1 className={styles.title}>L'heure du dudududu duueeeeeel</h1>
-          {spells_joueur_1}
+          <Joueur_1/>
           <Score/>
-          {spells_joueur_2}
+          <Joueur_2/>
         </div>
       </main>
     </div>
