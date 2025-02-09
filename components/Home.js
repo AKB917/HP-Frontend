@@ -19,7 +19,7 @@ function Home() {
 
   console.log(student_1);
 
-  //Joueur 1 fetch sort aléatoire
+  //Joueur 1 fetch sort aléatoire et character pour la partie
   useEffect(() => {
     fetch("http://localhost:3000/spells/")
       .then((response) => response.json())
@@ -27,10 +27,6 @@ function Home() {
         const spell1 = [data];
         setSpellsJ1(spell1);
       });
-  }, []);
-
-  //JOueur 1 fecth character
-  useEffect(() => {
     fetch("http://localhost:3000/characters/")
       .then((response) => response.json())
       .then((data) => {
@@ -39,23 +35,19 @@ function Home() {
       });
   }, []);
 
-  //JOueur 2 fecth character
-  useEffect(() => {
-    fetch("http://localhost:3000/characters/")
-      .then((response) => response.json())
-      .then((data) => {
-        const character = [data];
-        setStudent_2(character);
-      });
-  }, []);
-
-  //Joueur 2 fetch sort aléatoire
+  //Joueur 2 fetch sort aléatoire et character pour la partie
   useEffect(() => {
     fetch("http://localhost:3000/spells/")
       .then((response) => response.json())
       .then((data) => {
         const spell2 = [data];
         setSpellsJ2(spell2);
+      });
+    fetch("http://localhost:3000/characters/")
+      .then((response) => response.json())
+      .then((data) => {
+        const character = [data];
+        setStudent_2(character);
       });
   }, []);
 
@@ -114,46 +106,45 @@ function Home() {
           <h1 className={styles.title}>L'heure du dudududu duueeeeeel</h1>
           <div className={styles.middle}>
             <div className={styles.joueur_1}>
-          {student_1.map((data, i) => (
-              <Student_1
-                onSpellClick={spellClickJ1}
-                key={i}
-                studentName={data.name}
-                house={data.house}
-                image={data.image}
-              />
-            ))}
-            {spellsJ1.map((data, i) => (
-              <Joueur_1
-                onSpellClick={spellClickJ1}
-                key={i}
-                name={data.name}
-                description={data.description}
-                spellpoint1={data.spellpoint}
-              />
-            ))}
+              {student_1.map((data, i) => (
+                <Student_1
+                  onSpellClick={spellClickJ1}
+                  key={i}
+                  studentName={data.name}
+                  house={data.house}
+                  image={data.image}
+                />
+              ))}
+              {spellsJ1.map((data, i) => (
+                <Joueur_1
+                  onSpellClick={spellClickJ1}
+                  key={i}
+                  name={data.name}
+                  description={data.description}
+                  spellpoint1={data.spellpoint}
+                />
+              ))}
             </div>
-            
             <Score score_1={score_1} score_2={score_2} />
             <div className={styles.joueur_1}>
-            {student_2.map((data, i) => (
-              <Student_2
-                onSpellClick={spellClickJ1}
-                key={i}
-                studentName={data.name}
-                house={data.house}
-                image={data.image}
-              />
-            ))}
-            {spellsJ2.map((data, i) => (
-              <Joueur_2
-                onSpellClick={spellClickJ2}
-                key={i}
-                name={data.name}
-                description={data.description}
-                spellpoint2={data.spellpoint}
-              />
-            ))}
+              {student_2.map((data, i) => (
+                <Student_2
+                  onSpellClick={spellClickJ1}
+                  key={i}
+                  studentName={data.name}
+                  house={data.house}
+                  image={data.image}
+                />
+              ))}
+              {spellsJ2.map((data, i) => (
+                <Joueur_2
+                  onSpellClick={spellClickJ2}
+                  key={i}
+                  name={data.name}
+                  description={data.description}
+                  spellpoint2={data.spellpoint}
+                />
+              ))}
             </div>
           </div>
         </div>
