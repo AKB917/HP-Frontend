@@ -10,13 +10,16 @@ function Home() {
   const [spellsJ2, setSpellsJ2] = useState([]);
   const [selectedSpellJ1, setSelectedSpellJ1] = useState(0);
   const [selectedSpellJ2, setSelectedSpellJ2] = useState(0);
+  const [score_1, setScore_1] = useState(0);
+  const [score_2, setScore_2] = useState(0);
+  console.log('stock spell1',selectedSpellJ1)
+  console.log('stock spell2',selectedSpellJ2)
 
   //Joueur 1 fetch sort aléatoire
   useEffect(() => {
     fetch("http://localhost:3000/spells/")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const spell1 = [data];
         setSpellsJ1(spell1);
       });
@@ -27,21 +30,30 @@ function Home() {
     fetch("http://localhost:3000/spells/")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const spell2 = [data];
         setSpellsJ2(spell2);
       });
   }, []);
 
+  //si J1 et J2 on joué alors comparaison des puissances de sort
+  useEffect(() => {
+    if (selectedSpellJ1 && selectedSpellJ2) {
+      if (selectedSpellJ1 > selectedSpellJ2) {
+        setScore_1((prevScore) => prevScore + 1);
+      } else {
+        setScore_2((prevScore) => prevScore + 1);
+      };
+    };
+  }, [selectedSpellJ1, selectedSpellJ2]);
 
+  //click button J1
   const spellClickJ1 = (spell) => {
-    console.log("spell select 1", spell);
-    setSelectedSpellJ1(spell)
+    setSelectedSpellJ1(spell);
   };
 
+  //click button J2
   const spellClickJ2 = (spell) => {
-    console.log("spell select 2", spell);
-    setSelectedSpellJ2(spell)
+    setSelectedSpellJ2(spell);
   };
 
   return (
@@ -59,10 +71,7 @@ function Home() {
               spellpoint1={data.spellpoint}
             />
           ))}
-          <Score
-            spellpoint1={selectedSpellJ1}
-            spellpoint2={selectedSpellJ2}
-          />
+          <Score score_1={score_1} score_2={score_2} />
           {spellsJ2.map((data, i) => (
             <Joueur_2
               onSpellClick={spellClickJ2}
