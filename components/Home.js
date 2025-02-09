@@ -1,4 +1,7 @@
 import styles from '../styles/Home.module.css';
+import Header from './Header';
+import Joueurs from './Joueurs';
+import Score from './score';
 
 function Home() {
 
