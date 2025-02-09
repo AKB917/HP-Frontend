@@ -1,3 +1,4 @@
 .joueur{
-    
+    display: flex;
+    align-items: center;
 }
