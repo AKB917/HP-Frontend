@@ -6,14 +6,14 @@ import Joueur_2 from "./Joueur_2";
 import Score from "./Score";
 
 function Home() {
-  const [spellsJ1, setSpellsJ1] = useState([]);
+  const [spellsJ1, setSpellsJ1] = useState([]); //stock le sort fetchéééo du J1
   const [spellsJ2, setSpellsJ2] = useState([]);
-  const [selectedSpellJ1, setSelectedSpellJ1] = useState(0);
-  const [selectedSpellJ2, setSelectedSpellJ2] = useState(0);
-  const [score_1, setScore_1] = useState(0);
+  const [selectedSpellJ1, setSelectedSpellJ1] = useState(0); // après le clique stock la puissance du sort fetchéo
+  const [selectedSpellJ2, setSelectedSpellJ2] = useState(0);// et permet le calcul du score
+  const [score_1, setScore_1] = useState(0); // après clique mise a jour ou pas du compteur
   const [score_2, setScore_2] = useState(0);
-  console.log('stock spell1',selectedSpellJ1)
-  console.log('stock spell2',selectedSpellJ2)
+  console.log(selectedSpellJ1)
+  console.log(selectedSpellJ2)
 
   //Joueur 1 fetch sort aléatoire
   useEffect(() => {
@@ -35,16 +35,44 @@ function Home() {
       });
   }, []);
 
-  //si J1 et J2 on joué alors comparaison des puissances de sort
+
+  //si J1 et J2 on cliqué alors comparaison des puissances de sort puis remise a zero du sort stocké et chargement du sort suivant
   useEffect(() => {
     if (selectedSpellJ1 && selectedSpellJ2) {
       if (selectedSpellJ1 > selectedSpellJ2) {
         setScore_1((prevScore) => prevScore + 1);
-      } else {
+      } else if (selectedSpellJ1 < selectedSpellJ2){
         setScore_2((prevScore) => prevScore + 1);
+      } else {
+        console.log('égalité');
       };
+      setSelectedSpellJ1(null);
+      setSelectedSpellJ2(null);
+      reloadJ1();
+      reloadJ2();
     };
   }, [selectedSpellJ1, selectedSpellJ2]);
+
+
+  //fonction reload de sort aléatoire J1
+  const reloadJ1 = () => {
+    fetch("http://localhost:3000/spells/")
+      .then((response) => response.json())
+      .then((data) => {
+        const spell1 = [data];
+        setSpellsJ1(spell1);
+      });
+  };
+
+    //fonction reload de sort aléatoire J2
+  const reloadJ2 = () => {
+    fetch("http://localhost:3000/spells/")
+      .then((response) => response.json())
+      .then((data) => {
+        const spell2 = [data];
+        setSpellsJ2(spell2);
+      });
+  };
 
   //click button J1
   const spellClickJ1 = (spell) => {
