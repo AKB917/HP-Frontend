@@ -30,7 +30,6 @@ function Home() {
         <Header />
         <div className={styles.middle}>
           <h1 className={styles.title}>L'heure du dudududu duueeeeeel</h1>
-          <joueur_1/>
           {spells_joueur_1}
           <Score/>
           {spells_joueur_2}
