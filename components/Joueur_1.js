@@ -5,7 +5,13 @@ function Joueur_1() {
 
   
   return (
-    <div>Joueur_1</div>
+    <div>
+      <div className={StyleSheet.joureur}>
+    <Image src=';/public/sorcier1' alt='avatar'/>
+    <span className={Styles.sort}></span>
+    <button onClick={gg}>Nouveau sorts</button>
+    </div>
+    </div>
   )
 }
 
