@@ -15,7 +15,7 @@ function Joueur_1(props) {
         <p> power of spell :{props.spellpoint1}</p>
         <Image src="/sorcier1.png" alt="avatar" height={100} width={100} />
         <span className={styles.sort}></span>
-        <button className={styles.Button} onClick={handleClick}>Nouveau sorts</button>
+        <button className={styles.Button} onClick={() => handleClick()}>Nouveau sorts</button>
       </div>
     </div>
   );
